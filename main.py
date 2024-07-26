@@ -97,6 +97,7 @@ def update_title(newTitle):
         quality="standard",
         n=1
     )
+    print(bytes(aImage.data[0].b64_json, "utf-8"))
     img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
     img.save('client/public/static/my-image.jpeg')
     with app.app_context():
