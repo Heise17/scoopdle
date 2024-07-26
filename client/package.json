@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "127.0.0.1:5000",
+  "proxy": "https://scoopdle-522f63d36a9b.herokuapp.com/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
