@@ -98,7 +98,7 @@ def update_title(newTitle):
         n=1
     )
     img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
-    img.save('static/my-image.jpeg')
+    img.save('my-image.jpeg')
     with app.app_context():
         init_title(db, app)
 
