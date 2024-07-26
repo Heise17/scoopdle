@@ -12,7 +12,7 @@ from whitenoise import WhiteNoise
 load_dotenv()
 
 app = Flask(__name__, static_folder="client/dist", static_url_path="")
-app.wsgi_app = WhiteNoise(app.wsgi_app, root="static/")
+app.wsgi_app = WhiteNoise(app.wsgi_app, root="client/public/static/")
 cors = CORS(app, origins='*')
 
 # app.secret_key=os.environ.get("SECRET_KEY")
@@ -73,7 +73,7 @@ def fetch_words():
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    with open("static/my-image.jpeg", "rb") as image_file:
+    with open("client/public/static/my-image.jpeg", "rb") as image_file:
         image_b64 = base64.b64encode(image_file.read())
     return jsonify({"image": image_b64.decode()})
 
@@ -98,7 +98,7 @@ def update_title(newTitle):
         n=1
     )
     img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
-    img.save('my-image.jpeg')
+    img.save('client/public/static/my-image.jpeg')
     with app.app_context():
         init_title(db, app)
 
