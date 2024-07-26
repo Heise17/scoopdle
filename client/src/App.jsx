@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     fetchTitle();
     fetchWords();
-    // fetchImage();
+    fetchImage();
     initStates();
   }, []);
 
@@ -65,14 +65,17 @@ function App() {
     return totalGuesses;
   };
 
-  //   if (image != "") {
-  if (true) {
+  if (image != "") {
+    //   if (true) {
     return (
       <div className="container">
         <HeaderText />
-        {/* <img src={"data:image/jpeg;base64," + image} alt="" /> */}
+        <img className="center" src={"data:image/jpeg;base64," + image} alt="" />
         {isFullCleared(completed) && (
-          <h3> Congrats! You only messed up {isFullCleared(completed)} times!</h3>
+          <h3>
+            {" "}
+            Congrats! You only messed up {isFullCleared(completed)} times!
+          </h3>
         )}
         <form className="center-form" onSubmit={onSubmit} autoComplete="off">
           {words.map((word) => (
