@@ -55,7 +55,12 @@ const WordBox = ({
           <low-label>
             <br></br>
           </low-label>
-          <b>{word.word}</b>
+          {word.autoRevealed && (
+            <b>{word.word}</b>
+          )}
+          {!word.autoRevealed && (
+            <gb>{word.word}</gb>
+          )}
         </div>
         {lettersGuessed
           .slice(0, -1)

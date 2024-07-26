@@ -68,13 +68,13 @@ function App() {
   //   if (image != "") {
   if (true) {
     return (
-      <div className="center">
+      <div className="container">
         <HeaderText />
         {/* <img src={"data:image/jpeg;base64," + image} alt="" /> */}
         {isFullCleared(completed) && (
-          <b> Congrats! You only messed up {isFullCleared(completed)} times!</b>
+          <h3> Congrats! You only messed up {isFullCleared(completed)} times!</h3>
         )}
-        <form onSubmit={onSubmit} autoComplete="off">
+        <form className="center-form" onSubmit={onSubmit} autoComplete="off">
           {words.map((word) => (
             <WordBox
               key={word.id}

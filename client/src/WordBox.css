@@ -54,3 +54,13 @@ b {
   margin-right: 10px;
   grid-row: 3;
 }
+
+gb {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: green;
+  font-family: monospace;
+  margin-left: 10px;
+  margin-right: 10px;
+  grid-row: 3;
+}
