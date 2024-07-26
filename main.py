@@ -12,7 +12,7 @@ from whitenoise import WhiteNoise
 load_dotenv()
 
 app = Flask(__name__, static_folder="client/dist", static_url_path="")
-app.wsgi_app = WhiteNoise(app.wsgi_app, root="client/public/static/")
+app.wsgi_app = WhiteNoise(app.wsgi_app, root="client/dist")
 cors = CORS(app, origins='*')
 
 # app.secret_key=os.environ.get("SECRET_KEY")
@@ -50,6 +50,16 @@ class words(db.Model):
             "pos": self.pos,
             "autoRevealed": self.auto_revealed
         }
+        
+class aimage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_b64 = db.Column(db.LargeBinary, unique=False, nullable=False)
+    
+    def to_json(self):
+        return {
+            "id": self.id,
+            "imageb64": bytes.decode(self.image_b64)
+        }
     
 with app.app_context():
     db.create_all()
@@ -73,9 +83,11 @@ def fetch_words():
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    with open("client/public/static/my-image.jpeg", "rb") as image_file:
-        image_b64 = base64.b64encode(image_file.read())
-    return jsonify({"image": image_b64.decode()})
+    # with open("client/dist/my-image.jpeg", "rb") as image_file:
+    #     image_b64 = base64.b64encode(image_file.read())
+    ii = aimage.query.first().to_json()
+    return jsonify({"image": ii})
+    # return send_from_directory(app.static_folder, "my-image.jpeg", mimetype='image/gif')
 
 @app.route("/")
 @cross_origin()
@@ -97,9 +109,14 @@ def update_title(newTitle):
         quality="standard",
         n=1
     )
-    print(bytes(aImage.data[0].b64_json, "utf-8"))
-    img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
-    img.save('client/public/static/my-image.jpeg')
+    # print(bytes(aImage.data[0].b64_json, "utf-8"))
+    with app.app_context():
+        aimage.query.delete()
+        mi = aimage(image_b64=bytes(aImage.data[0].b64_json, "utf-8"))
+        db.session.add(mi)
+        db.session.commit()
+    # img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
+    # img.save('client/dist/my-image.jpeg')
     with app.app_context():
         init_title(db, app)
 

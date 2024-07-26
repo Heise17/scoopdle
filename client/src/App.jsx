@@ -37,7 +37,7 @@ function App() {
   const fetchImage = async () => {
     const response = await fetch("/api/image");
     const data = await response.json();
-    setImage(data.image);
+    setImage(data.image.imageb64);
   };
 
   const onSubmit = async (e) => {

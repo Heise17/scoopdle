@@ -1,5 +1,5 @@
 .container {
-    margin: 0 auto;
+    margin: 0 auto 50px;
     display: block;
     justify-content: center;
     text-align: center;
@@ -43,7 +43,7 @@ form {
 }
 
 img {
-    height: 420px;
+    height: 380px;
     margin: 0 auto 20px;
 }
 
