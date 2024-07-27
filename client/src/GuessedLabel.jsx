@@ -8,7 +8,7 @@ const GuessedLabel = ({ letters, corrWord }) => {
   useEffect(() => {
     let tArr = new Array(letters.length);
     for (let i = 0; i < letters.length; i++) {
-      if (letters[i] == corrWord.split("")[i]) {
+      if (letters[i].toLowerCase() == corrWord.split("")[i].toLowerCase()) {
         tArr[i] = true;
       } else {
         tArr[i] = false;
