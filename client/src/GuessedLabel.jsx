@@ -4,25 +4,38 @@ import "./GuessedLabel.css";
 
 const GuessedLabel = ({ letters, corrWord }) => {
   const [isMatch, setIsMatch] = useState([]);
+  const [isContained, setIsContained] = useState([]);
 
+  // when label is created, determine which letters match and store the states
   useEffect(() => {
-    let tArr = new Array(letters.length);
+    let tMatch = new Array(letters.length);
+    let tContained = new Array(letters.length);
     for (let i = 0; i < letters.length; i++) {
+      // check for exact match
       if (letters[i].toLowerCase() == corrWord.split("")[i].toLowerCase()) {
-        tArr[i] = true;
+        tMatch[i] = true;
       } else {
-        tArr[i] = false;
+        tMatch[i] = false;
+        // check if word contains letter
+        if (corrWord.toLowerCase().split("").includes(letters[i].toLowerCase())) {
+            tContained[i] = true;
+        } else {
+            tContained[i] = false;
+        }
       }
     }
-    setIsMatch(tArr);
+    setIsMatch(tMatch);
+    setIsContained(tContained);
   }, []);
 
+  // display each letter's color based on its state
   return (
     <div>
       {letters.map(
         (letter, i) =>
-          (isMatch[i] && <no-space-green key={i}>{letter}</no-space-green>) ||
-          (!isMatch[i] && <no-space-red key={i}>{letter}</no-space-red>)
+          (isContained[i] && !isMatch[i] && <no-space-orange key={i}>{letter}</no-space-orange>) ||
+          (isMatch[i] && !isContained[i] && <no-space-green key={i}>{letter}</no-space-green>) ||
+          (!isMatch[i] && !isContained[i] && <no-space-red key={i}>{letter}</no-space-red>)
       )}
     </div>
   );

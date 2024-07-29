@@ -55,7 +55,7 @@ b {
   grid-row: 3;
 }
 
-gb {
+g-b {
   font-size: 1.5em;
   font-weight: bold;
   color: green;
@@ -63,4 +63,10 @@ gb {
   margin-left: 10px;
   margin-right: 10px;
   grid-row: 3;
+}
+
+.red-outline {
+    border: 2px solid red;
+    border-radius: 4px;
+    outline-color: red;
 }
