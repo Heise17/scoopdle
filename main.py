@@ -26,13 +26,15 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 class title(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, unique=False, nullable=True)
-    title = db.Column(db.String(150), unique=False, nullable=False)
+    title = db.Column(db.String(200), unique=False, nullable=False)
+    link = db.Column(db.String(400), unique=False, nullable=True)
 
     def to_json(self):
         return {
             "id": self.id,
             "date": self.date,
             "title": self.title,
+            "link": self.link
         }
 
 # words databse table
@@ -93,12 +95,12 @@ def serve():
     return send_from_directory(app.static_folder, "index.html")
 
 # generate new image from title and activate
-def update_title(newTitle):
+def update_title(newTitle, newTitleLink):
     
     # delete title table and add new title
     with app.app_context():
         title.query.delete()
-        tt = title(date=datetime.today(), title=newTitle)
+        tt = title(date=datetime.today(), title=newTitle, link=newTitleLink)
         db.session.add(tt)
         db.session.commit()
         
@@ -127,4 +129,4 @@ with app.app_context():
 # local mode
 if __name__ == "__main__":
     print("PYTHON APP LAUNCHED VIA MAIN")
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="localhost")

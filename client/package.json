@@ -3,7 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "https://scoopdle-522f63d36a9b.herokuapp.com/",
+  "proxy": {
+    "http://127.0.0.1:5000/api/words": {
+      "target": "https://scoopdle-522f63d36a9b.herokuapp.com/api/words"
+    },
+    "http://127.0.0.1:5000/api/title": {
+      "target": "https://scoopdle-522f63d36a9b.herokuapp.com/api/title"
+    },
+    "http://127.0.0.1:5000/api/image": {
+      "target": "https://scoopdle-522f63d36a9b.herokuapp.com/api/image"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -145,3 +145,6 @@ charges
 accused
 allegedly
 while
+how
+when
+where

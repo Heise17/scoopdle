@@ -4,7 +4,8 @@ import HeaderText from "./HeaderText";
 import WordBox from "./WordBox";
 
 function App() {
-  const [title, setTitle] = useState("default");
+  const [title, setTitle] = useState("");
+  const [titleLink, setTitleLink] = useState("");
   const [words, setWords] = useState([]);
   const [guessedList, setGuessedList] = useState([]);
   const [numSubmits, setNumSubmits] = useState(0);
@@ -21,21 +22,22 @@ function App() {
 
   // fetch title from api
   const fetchTitle = async () => {
-    const response = await fetch("/api/title");
+    const response = await fetch("http://127.0.0.1:5000/api/title");
     const data = await response.json();
     setTitle(data.title.title);
+    setTitleLink(data.title.link);
   };
 
   // fetch words from api
   const fetchWords = async () => {
-    const response = await fetch("/api/words");
+    const response = await fetch("http://127.0.0.1:5000/api/words");
     const data = await response.json();
     setWords(data.words);
   };
 
   // fetch image from api
   const fetchImage = async () => {
-    const response = await fetch("/api/image");
+    const response = await fetch("http://127.0.0.1:5000/api/image");
     const data = await response.json();
     setImage(data.image.imageb64);
   };
@@ -57,7 +59,7 @@ function App() {
   const isFullCleared = (completedArr) => {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
-      if (!wordState[0]) {
+      if (typeof wordState == "undefined") {
         return false;
       }
       totalGuesses += wordState[1];
@@ -73,12 +75,19 @@ function App() {
     return (
       <div className="container">
         <HeaderText />
-        <img className="center" src={"data:image/jpeg;base64," + image} alt="" />
+        <img
+          className="center"
+          src={"data:image/jpeg;base64," + image}
+          alt=""
+        />
         {isFullCleared(completed) && (
-          <h3>
-            {" "}
-            Congrats! You only messed up {isFullCleared(completed)} times!
-          </h3>
+          <>
+            <h3>
+              {" "}
+              Congrats! You only messed up {isFullCleared(completed)} times!
+            </h3>
+            <a href={titleLink} target="_blank" rel="noopener noreferrer">Check out the full story here</a>
+          </>
         )}
         <form className="center-form" onSubmit={onSubmit} autoComplete="off">
           {words.map((word) => (
