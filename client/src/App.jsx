@@ -22,7 +22,8 @@ function App() {
 
   // fetch title from api
   const fetchTitle = async () => {
-    const response = await fetch("http://127.0.0.1:5000/api/title");
+    const response = await fetch("/api/title");
+    // const response = await fetch("http://127.0.0.1:5000/api/title");
     const data = await response.json();
     setTitle(data.title.title);
     setTitleLink(data.title.link);
@@ -30,14 +31,16 @@ function App() {
 
   // fetch words from api
   const fetchWords = async () => {
-    const response = await fetch("http://127.0.0.1:5000/api/words");
+    const response = await fetch("/api/words");
+    // const response = await fetch("http://127.0.0.1:5000/api/words");
     const data = await response.json();
     setWords(data.words);
   };
 
   // fetch image from api
   const fetchImage = async () => {
-    const response = await fetch("http://127.0.0.1:5000/api/image");
+    const response = await fetch("/api/image");
+    // const response = await fetch("http://127.0.0.1:5000/api/image");
     const data = await response.json();
     setImage(data.image.imageb64);
   };
