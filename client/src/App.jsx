@@ -11,46 +11,49 @@ function App() {
   const [completed, setCompleted] = useState([]);
   const [image, setImage] = useState("");
 
+  // on load, fetch info from api and initialize guessedLisst array
   useEffect(() => {
     fetchTitle();
     fetchWords();
     fetchImage();
-    initStates();
+    setGuessedList(new Array(words.length));
   }, []);
 
-  const initStates = () => {
-    setGuessedList(new Array(words.length));
-  };
-
+  // fetch title from api
   const fetchTitle = async () => {
     const response = await fetch("/api/title");
     const data = await response.json();
     setTitle(data.title.title);
   };
 
+  // fetch words from api
   const fetchWords = async () => {
     const response = await fetch("/api/words");
     const data = await response.json();
     setWords(data.words);
   };
 
+  // fetch image from api
   const fetchImage = async () => {
     const response = await fetch("/api/image");
     const data = await response.json();
     setImage(data.image.imageb64);
   };
 
+  // register submits
   const onSubmit = async (e) => {
     e.preventDefault();
     setNumSubmits(numSubmits + 1);
   };
 
+  // updates the completed array
   const insertCompleted = (wordId, numGuesses, isDone) => {
     let newArr = completed;
     newArr[wordId] = [isDone, numGuesses];
     setCompleted(newArr);
   };
 
+  // checks if the puzzle is fully solved
   const isFullCleared = (completedArr) => {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
@@ -65,8 +68,8 @@ function App() {
     return totalGuesses;
   };
 
+  // render the app if an image was loaded
   if (image != "") {
-    //   if (true) {
     return (
       <div className="container">
         <HeaderText />

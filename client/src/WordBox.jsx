@@ -15,6 +15,7 @@ const WordBox = ({
   const [lettersGuessed, setLettersGuessed] = useState([]);
   const [field, setField] = useState("");
 
+  // modifies guessedList state to include current state for this wordbox
   const updateGuessed = (inputWord) => {
     let newArr = [...guessedList];
     newArr[word.id] = inputWord;
@@ -22,6 +23,7 @@ const WordBox = ({
     setField(inputWord);
   };
 
+  // each time guesses are submitted the guessed/completed states are updated and necessary words revealed
   useEffect(() => {
     if (typeof word.id !== "undefined" && word.autoRevealed) {
       setCompleted(word.id, wordsGuessed.length, true);
@@ -42,10 +44,13 @@ const WordBox = ({
     setField("");
   }, [numSubmits]);
 
+  // checks to ensure the word has been populated
   if (!word) {
     return;
   }
+
   if (isGuessed || word.autoRevealed) {
+    // displays box with word revealed
     return (
       <div className="center">
         <div className="center-grid">
@@ -75,12 +80,12 @@ const WordBox = ({
       </div>
     );
   } else {
+    // displays box with word unrevealed
     return (
       <div key={word.id} className="center">
         <div className="center-grid">
           <high-label>{word.numLetters}</high-label>
           <low-label>{word.pos}</low-label>
-          {/* <input-overlay>{blankOverlayText()}</input-overlay> */}
           <input
             id={word.id}
             name={word.id}

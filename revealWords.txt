@@ -137,9 +137,11 @@ yet
 so
 arrested
 charged
+indicted
 booked
 detained
 jailed
 charges
 accused
 allegedly
+while

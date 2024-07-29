@@ -8,21 +8,21 @@ from dotenv import load_dotenv
 from flask_cors import CORS, cross_origin
 from flask.helpers import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from whitenoise import WhiteNoise
 load_dotenv()
 
+# initialize flask app and cross origin resource sharing
 app = Flask(__name__, static_folder="client/dist", static_url_path="")
-app.wsgi_app = WhiteNoise(app.wsgi_app, root="client/dist")
 cors = CORS(app, origins='*')
 
-# app.secret_key=os.environ.get("SECRET_KEY")
-# app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
+# link SQLAlchemy to database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+# SQLAlchemy and OpenAI instances
 db = SQLAlchemy(app)
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
     
+# title database table
 class title(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, unique=False, nullable=True)
@@ -35,6 +35,7 @@ class title(db.Model):
             "title": self.title,
         }
 
+# words databse table
 class words(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     num_letters = db.Column(db.Integer, unique=False, nullable=False)
@@ -50,7 +51,8 @@ class words(db.Model):
             "pos": self.pos,
             "autoRevealed": self.auto_revealed
         }
-        
+
+# aimage database table
 class aimage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_b64 = db.Column(db.LargeBinary, unique=False, nullable=False)
@@ -60,18 +62,15 @@ class aimage(db.Model):
             "id": self.id,
             "imageb64": bytes.decode(self.image_b64)
         }
-    
-with app.app_context():
-    db.create_all()
-    print("all tables created")
 
+# endpoint for title
 @app.route("/api/title", methods=["GET"])
 @cross_origin()
 def fetch_title():
     tt = title.query.first()
     return jsonify({"title": tt.to_json()})
 
-
+# endpoint for words and word info
 @app.route("/api/words", methods=["GET"])
 @cross_origin()
 def fetch_words():
@@ -79,28 +78,31 @@ def fetch_words():
     json_words = list(map(lambda x: x.to_json(), ws))
     return jsonify({"words": json_words})
 
-
+# endpoint for image
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    # with open("client/dist/my-image.jpeg", "rb") as image_file:
-    #     image_b64 = base64.b64encode(image_file.read())
     ii = aimage.query.first().to_json()
     return jsonify({"image": ii})
-    # return send_from_directory(app.static_folder, "my-image.jpeg", mimetype='image/gif')
 
+# serves homepage
 @app.route("/")
 @cross_origin()
 def serve():
     print("serving index.html")
     return send_from_directory(app.static_folder, "index.html")
 
+# generate new image from title and activate
 def update_title(newTitle):
+    
+    # delete title table and add new title
     with app.app_context():
         title.query.delete()
         tt = title(date=datetime.today(), title=newTitle)
         db.session.add(tt)
         db.session.commit()
+        
+    # query OpenAI, return image as b64 string
     aImage = client.images.generate(
         response_format="b64_json",
         model="dall-e-3",
@@ -109,18 +111,20 @@ def update_title(newTitle):
         quality="standard",
         n=1
     )
-    # print(bytes(aImage.data[0].b64_json, "utf-8"))
+    
+    # post OpenAI image to database and activate title
     with app.app_context():
         aimage.query.delete()
         mi = aimage(image_b64=bytes(aImage.data[0].b64_json, "utf-8"))
         db.session.add(mi)
         db.session.commit()
-    # img = Image.open(io.BytesIO(base64.decodebytes(bytes(aImage.data[0].b64_json, "utf-8"))))
-    # img.save('client/dist/my-image.jpeg')
-    with app.app_context():
         init_title(db, app)
+        
+# creates database tables if necessary
+with app.app_context():
+    db.create_all()
 
-
+# local mode
 if __name__ == "__main__":
     print("PYTHON APP LAUNCHED VIA MAIN")
     app.run(debug=True, host="0.0.0.0")
