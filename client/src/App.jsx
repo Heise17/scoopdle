@@ -59,7 +59,7 @@ function App() {
   const isFullCleared = (completedArr) => {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
-      if (typeof wordState == "undefined") {
+      if (!wordState[0]) {
         return false;
       }
       totalGuesses += wordState[1];

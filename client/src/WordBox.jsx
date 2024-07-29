@@ -30,7 +30,7 @@ const WordBox = ({
       setCompleted(word.id, wordsGuessed.length, true);
       setGuessed(true);
     } else if (guessedList[word.id]) {
-      if (guessedList[word.id].length() >= word.word.length()) {
+      if (guessedList[word.id].length >= word.word.length) {
         setWordsGuessed([...wordsGuessed, guessedList[word.id]]);
         let tempArr = lettersGuessed;
         tempArr.push(guessedList[word.id].split(""));
@@ -38,14 +38,15 @@ const WordBox = ({
         if (guessedList[word.id].toLowerCase() == word.word.toLowerCase()) {
           setCompleted(word.id, wordsGuessed.length, true);
           setIsGuessed(true);
-        } else {
-          setCompleted(word.id, 0, false);
         }
         setField("");
         setIsInputError(false);
       } else {
         setIsInputError(true);
+        console.log("Input error")
       }
+    } else if (!isGuessed){
+        setCompleted(word.id, 0, false)
     }
     setGuessed([]);
   }, [numSubmits]);
@@ -67,7 +68,7 @@ const WordBox = ({
             <br></br>
           </low-label>
           {word.autoRevealed && <b>{word.word}</b>}
-          {!word.autoRevealed && <gb>{word.word}</gb>}
+          {!word.autoRevealed && <g-b>{word.word}</g-b>}
         </div>
         {lettersGuessed
           .slice(0, -1)
@@ -88,15 +89,15 @@ const WordBox = ({
         <div className="center-grid">
           <high-label>{word.numLetters}</high-label>
           <low-label>{word.pos}</low-label>
-          (!isInputError && <input
+          {!isInputError && <input
             id={word.id}
             name={word.id}
             maxLength={word.numLetters}
             size={word.numLetters - 1}
             value={field}
             onChange={(e) => updateGuessed(e.target.value)}
-          />)
-          (isInputError && <input
+          />}
+          {isInputError && <input
             className="red-outline"
             id={word.id}
             name={word.id}
@@ -104,7 +105,7 @@ const WordBox = ({
             size={word.numLetters - 1}
             value={field}
             onChange={(e) => updateGuessed(e.target.value)}
-          />)
+          />}
         </div>
         {lettersGuessed.toReversed().map((guessedWord) => (
           <GuessedLabel
