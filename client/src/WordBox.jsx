@@ -21,7 +21,11 @@ const WordBox = ({
     let newArr = [...guessedList];
     newArr[word.id] = inputWord;
     setGuessed(newArr);
-    setField(inputWord);
+    if (inputWord.length > word.word.length){
+        setField(inputWord.slice(0, -1));
+    } else {
+        setField(inputWord)
+    }
   };
 
   // each time guesses are submitted the guessed/completed states are updated and necessary words revealed
