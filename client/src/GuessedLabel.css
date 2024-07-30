@@ -1,35 +1,73 @@
 no-space-red {
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 1.5em;
-    font-family: monospace;
-    color: red;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: monospace;
+  color: red;
 }
 
 no-space-green {
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 1.5em;
-    font-family: monospace;
-    color: green;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: monospace;
+  color: green;
 }
 
 no-space-orange {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: monospace;
+  color: orange;
+}
+
+@media all and (max-width: 500px) {
+  no-space-red {
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 0px;
     padding-right: 0px;
     margin-top: 10px;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.2em;
+    font-family: monospace;
+    color: red;
+  }
+
+  no-space-green {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: monospace;
+    color: green;
+  }
+
+  no-space-orange {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
     font-family: monospace;
     color: orange;
+  }
 }

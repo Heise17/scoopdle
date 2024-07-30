@@ -1,4 +1,5 @@
 .container {
+  max-width: fit-content;
   margin: 0 auto 50px;
   display: block;
   justify-content: center;
@@ -15,14 +16,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 0px;
+  row-gap: 5px;
   justify-content: center;
-}
-
-.center-grid {
-  display: grid;
-  grid-template-rows: 20px 20px 20px;
-  align-items: center;
 }
 
 .center-grid {
@@ -37,8 +32,8 @@
 }
 
 .box-overlay-low {
-    display: block;
-    height: 0;
+  display: block;
+  height: 0;
 }
 
 .box-overlay-high {
@@ -72,6 +67,13 @@ a {
 }
 
 @media all and (min-width: 500px) {
+  .container {
+    max-width: fit-content;
+    display: block;
+    justify-content: center;
+    text-align: center;
+    bottom: 10px;
+  }
   .box-overlay-low {
     display: block;
     height: 0;
