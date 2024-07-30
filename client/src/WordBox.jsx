@@ -83,13 +83,16 @@ const WordBox = ({
       </div>
     );
   } else {
+    let blankStr = "-";
     // displays box with word unrevealed
     return (
       <div key={word.id} className="center">
         <div className="center-grid">
           <high-label>{word.numLetters}</high-label>
           <low-label>{word.pos}</low-label>
+          <input-overlay>{blankStr.repeat(word.numLetters)}</input-overlay>
           {!isInputError && <input
+            className="no-outline"
             id={word.id}
             name={word.id}
             maxLength={word.numLetters}
