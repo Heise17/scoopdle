@@ -129,4 +129,5 @@ with app.app_context():
 # local mode
 if __name__ == "__main__":
     print("PYTHON APP LAUNCHED VIA MAIN")
-    app.run(debug=True, host="localhost")
+    # app.run(debug=True, host="localhost")
+    app.run(debug=True, host="0.0.0.0")

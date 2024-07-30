@@ -1,8 +1,8 @@
 .container {
-    margin: 0 auto 50px;
-    display: block;
-    justify-content: center;
-    text-align: center;
+  margin: 0 auto 50px;
+  display: block;
+  justify-content: center;
+  text-align: center;
 }
 
 .center {
@@ -12,11 +12,11 @@
 }
 
 .center-form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 10px;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 0px;
+  justify-content: center;
 }
 
 .center-grid {
@@ -25,34 +25,67 @@
   align-items: center;
 }
 
+.center-grid {
+  display: grid;
+  grid-template-rows: 20px 20px 20px;
+  align-items: center;
+}
+
+.break {
+  height: 5px;
+  width: 100%;
+}
+
+.box-overlay-low {
+    display: block;
+    height: 0;
+}
+
+.box-overlay-high {
+  display: block;
+  height: 5;
+}
+
 h1 {
   margin: 0 auto;
+  font-size: 3em;
+  font-weight: bold;
   justify-content: center;
-  text-align : center;
+  text-align: center;
 }
 
 h3 {
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
   justify-content: center;
-  text-align : center;
-}
-
-form {
-  display: flex;
-  flex-direction: row;
+  text-align: center;
 }
 
 img {
-    height: 380px;
-    margin: 0 auto 20px;
-}
-
-input {
-  grid-row: 3;
+  max-width: 100%;
+  margin: 0 auto 10px;
 }
 
 a {
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 1.2em;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+@media all and (min-width: 500px) {
+  .box-overlay-low {
+    display: block;
+    height: 0;
+    position: relative;
+    top: 14px;
+  }
+
+  .box-overlay-high {
+    display: block;
+    height: 0;
+  }
+
+  img {
+    height: 380px;
+    margin: 0 auto 10px;
+  }
 }

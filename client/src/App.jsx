@@ -23,7 +23,7 @@ function App() {
   // fetch title from api
   const fetchTitle = async () => {
     const response = await fetch("/api/title");
-    // const response = await fetch("http://127.0.0.1:5000/api/title");
+    // const response = await fetch("http://10.0.0.12:5000/api/title");
     const data = await response.json();
     setTitle(data.title.title);
     setTitleLink(data.title.link);
@@ -32,7 +32,7 @@ function App() {
   // fetch words from api
   const fetchWords = async () => {
     const response = await fetch("/api/words");
-    // const response = await fetch("http://127.0.0.1:5000/api/words");
+    // const response = await fetch("http://10.0.0.12:5000/api/words");
     const data = await response.json();
     setWords(data.words);
   };
@@ -40,7 +40,7 @@ function App() {
   // fetch image from api
   const fetchImage = async () => {
     const response = await fetch("/api/image");
-    // const response = await fetch("http://127.0.0.1:5000/api/image");
+    // const response = await fetch("http://10.0.0.12:5000/api/image");
     const data = await response.json();
     setImage(data.image.imageb64);
   };
@@ -85,14 +85,21 @@ function App() {
         />
         {isFullCleared(completed) && (
           <>
-            <h3>
-              {" "}
+            <h3 className="box-overlay-high">
               Congrats! You only messed up {isFullCleared(completed)} times!
             </h3>
-            <a href={titleLink} target="_blank" rel="noopener noreferrer">Check out the full story here</a>
+            <a className="box-overlay-low" href={titleLink} target="_blank" rel="noopener noreferrer">
+              Check out the full story here
+            </a>
           </>
         )}
         <form className="center-form" onSubmit={onSubmit} autoComplete="off">
+          <div>
+            {!isFullCleared(completed) && (
+              <input type="submit" value="Submit"></input>
+            )}
+          </div>
+          <div className="break"></div>
           {words.map((word) => (
             <WordBox
               key={word.id}
@@ -103,13 +110,6 @@ function App() {
               setCompleted={insertCompleted}
             />
           ))}
-          <div className="center">
-            <div className="center-grid">
-              {!isFullCleared(completed) && (
-                <input type="submit" value="Submit"></input>
-              )}
-            </div>
-          </div>
         </form>
       </div>
     );

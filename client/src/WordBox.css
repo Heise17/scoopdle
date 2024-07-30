@@ -34,8 +34,9 @@ input-overlay {
   place-self: center;
   user-select: none;
   font-weight: bold;
-  top: 8px;
+  top: 5px;
   right: 1px;
+  margin: 0px;
 }
 
 input {
@@ -43,8 +44,6 @@ input {
   font-weight: bold;
   font-size: 1.5em;
   place-content: center;
-  margin-left: 5px;
-  margin-right: 5px;
   grid-row: 3;
   grid-column: 1;
 }
@@ -54,6 +53,7 @@ b {
   font-family: monospace;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 5px;
   grid-row: 3;
 }
 
@@ -62,8 +62,9 @@ g-b {
   font-weight: bold;
   color: green;
   font-family: monospace;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   grid-row: 3;
 }
 
@@ -71,15 +72,24 @@ g-b {
     border: 2px solid red;
     border-radius: 4px;
     outline-color: red;
-    margin-left: 3px;
-    margin-right: 3px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    z-index: 2;
+    background-color: transparent;
 }
 
 .no-outline {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 5px;
     z-index: 2;
     background-color: transparent;
     border: none;
     outline: none;
+}
+
+.break {
+    height: 3px;
+    width: 100%;
 }
