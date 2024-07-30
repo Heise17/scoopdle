@@ -61,15 +61,10 @@ const WordBox = ({
     return (
       <div className="center">
         <div className="center-grid">
-          <high-label>
-            <br></br>
-          </high-label>
-          <low-label>
-            <br></br>
-          </low-label>
           {word.autoRevealed && <b>{word.word}</b>}
           {!word.autoRevealed && <g-b>{word.word}</g-b>}
         </div>
+        <div className="break"></div>
         {lettersGuessed
           .slice(0, -1)
           .toReversed()
@@ -110,6 +105,7 @@ const WordBox = ({
             onChange={(e) => updateGuessed(e.target.value)}
           />}
         </div>
+        <div className="break"></div>
         {lettersGuessed.toReversed().map((guessedWord) => (
           <GuessedLabel
             key={guessedWord}
