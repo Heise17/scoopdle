@@ -19,11 +19,13 @@ const WordBox = ({
   // modifies guessedList state to include current state for this wordbox
   const updateGuessed = (inputWord) => {
     let newArr = [...guessedList];
-    newArr[word.id] = inputWord;
-    setGuessed(newArr);
     if (inputWord.length > word.word.length){
+        newArr[word.id] = inputWord.slice(0, -1);
+        setGuessed(newArr);
         setField(inputWord.slice(0, -1));
     } else {
+        newArr[word.id] = inputWord;
+        setGuessed(newArr);
         setField(inputWord)
     }
   };
