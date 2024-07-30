@@ -4,11 +4,12 @@ high-label {
   place-content: center;
   place-self: center;
   grid-row: 1;
+  font-weight: bold;
 }
 
 low-label {
   font-family: monospace;
-  font-size: 1.4em;
+  font-size: 1.2em;
   place-content: center;
   place-self: center;
   margin-bottom: 8px;
@@ -26,32 +27,33 @@ under-label {
 input-overlay {
   position: relative;
   font-family: monospace;
-  font-size: 1.2em;
+  font-size: 1.5em;
   grid-row: 3;
   grid-column: 1;
-  z-index: 2;
+  z-index: 1;
   place-self: center;
   user-select: none;
-  top: 18px;
   font-weight: bold;
+  top: 8px;
+  right: 1px;
 }
 
 input {
   font-family: monospace;
-  font-size: 1.2em;
+  font-weight: bold;
+  font-size: 1.5em;
   place-content: center;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   grid-row: 3;
   grid-column: 1;
-  z-index: 1;
 }
 
 b {
   font-size: 1.5em;
   font-family: monospace;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   grid-row: 3;
 }
 
@@ -69,4 +71,15 @@ g-b {
     border: 2px solid red;
     border-radius: 4px;
     outline-color: red;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.no-outline {
+    margin-left: 5px;
+    margin-right: 5px;
+    z-index: 2;
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
