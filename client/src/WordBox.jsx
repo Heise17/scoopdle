@@ -15,6 +15,7 @@ const WordBox = ({
   const [lettersGuessed, setLettersGuessed] = useState([]);
   const [field, setField] = useState("");
   const [isInputError, setIsInputError] = useState(false);
+  const [isPunct, setIsPunct] = useState(false);
 
   // modifies guessedList state to include current state for this wordbox
   const updateGuessed = (inputWord) => {
@@ -60,6 +61,8 @@ const WordBox = ({
   // checks to ensure the word has been populated
   if (!word) {
     return;
+  } else if (word.pos == "PUNCT" && !isPunct) {
+    setIsPunct(true);
   }
 
   if (isGuessed || word.autoRevealed) {
@@ -67,8 +70,12 @@ const WordBox = ({
     return (
       <div className="center">
         <div className="center-grid">
-          {word.autoRevealed && <b>{word.word}</b>}
-          {!word.autoRevealed && <g-b>{word.word}</g-b>}
+          {word.autoRevealed && word.word == "-" && <b className="dash">{word.word}</b>}
+          {!word.autoRevealed && word.word == "-" && <g-b className="dash">{word.word}</g-b>}          
+          {word.autoRevealed && isPunct && word.word != "-" && <b className="punct">{word.word}</b>}
+          {!word.autoRevealed && isPunct && word.word != "-" && <g-b className="punct">{word.word}</g-b>}          
+          {word.autoRevealed && !isPunct && <b>{word.word}</b>}
+          {!word.autoRevealed && !isPunct && <g-b>{word.word}</g-b>}
         </div>
         <div className="break"></div>
         {lettersGuessed
