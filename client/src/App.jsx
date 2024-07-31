@@ -13,6 +13,7 @@ function App() {
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
+  const [clickedImage, setClickedImage] = useState("");
 
   // on load, fetch info from api and initialize guessedLisst array
   useEffect(() => {
@@ -44,6 +45,7 @@ function App() {
     const response = await fetch("/api/image");
     // const response = await fetch("http://10.0.0.12:5000/api/image");
     const data = await response.json();
+    setClickedImage(data.image.image1);
     setImage1(data.image.image1);
     setImage2(data.image.image2);
     setImage3(data.image.image3);
@@ -77,12 +79,30 @@ function App() {
     return totalGuesses;
   };
 
+  const switchImage = async (e) => {
+    let clickedId = e.target.id;
+    switch (clickedId) {
+        case "1":
+            setClickedImage(image1);
+            break;
+        case "2":
+            setClickedImage(image2);
+            break;
+        case "3":
+            setClickedImage(image3);
+            break;
+    }
+  }
+
   return (
     <div className="container">
       <HeaderText />
-      <img className="center" src={"data:image/jpeg;base64," + image1} alt="" />
-      <img className="center" src={"data:image/jpeg;base64," + image2} alt="" />
-      <img className="center" src={"data:image/jpeg;base64," + image3} alt="" />
+      <img className="center" src={"data:image/jpeg;base64," + clickedImage} alt="" />
+      <div className="center-form">
+        <button id="1" type="button" onClick={switchImage}>1</button>
+        <button id="2" type="button" onClick={switchImage}>2</button>
+        <button id="3" type="button" onClick={switchImage}>3</button>
+      </div>
       {isFullCleared(completed) && (
         <>
           <h3 className="box-overlay-high">

@@ -57,13 +57,21 @@ h3 {
 
 img {
   max-width: 100%;
-  margin: 0 auto 10px;
+  margin: 0 auto;
 }
 
 a {
   font-family: monospace;
   font-weight: bold;
   font-size: 1.2em;
+}
+
+button {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.5em;
+  width: 100px;
+  margin: 10px 5px 10px;
 }
 
 @media all and (min-width: 500px) {
@@ -89,5 +97,12 @@ a {
   img {
     height: 380px;
     margin: 0 auto 10px;
+  }
+  button {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 100px;
+    margin: 0px 5px 10px;
   }
 }

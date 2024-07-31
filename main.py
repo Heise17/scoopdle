@@ -77,7 +77,7 @@ class aimage(db.Model):
 @app.route("/api/title", methods=["GET"])
 @cross_origin()
 def fetch_title():
-    tt = title.query.filter_by(date = date.today()).first()
+    tt = title.query.filter_by(date = date.today()).one()
     return jsonify({"title": tt.to_json()})
 
 # endpoint for words and word info
@@ -92,8 +92,7 @@ def fetch_words():
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    ii = aimage.query.filter_by(date = date.today()).first()
-    print(ii)
+    ii = aimage.query.filter_by(date = date.today()).one()
     return jsonify({"image": ii.to_json()})
 
 # serves homepage
@@ -150,6 +149,33 @@ def update_title(newTitle, newTitleLink, y, m, d):
         db.session.commit()
         init_title(db, app)
         
+    print("title init complete")
+    
+def switch_image(imageNum):
+    with app.app_context():
+        currTitle = title.query.filter_by(date = date.today()).one()
+        aImageNew = client.images.generate(
+            response_format="b64_json",
+            model="dall-e-3",
+            prompt=currTitle.title,
+            size="1024x1024",
+            quality="standard",
+            n=1
+        )
+        daily_i = db.session.query(aimage).filter_by(date = date.today()).one()
+        match imageNum:
+            case 1:
+                daily_i.image1 = bytes(aImageNew.data[0].b64_json, "utf-8")
+                print("new image 1 added")
+            case 2:
+                daily_i.image2 = bytes(aImageNew.data[0].b64_json, "utf-8")
+                print("new image 2 added")
+            case 3:
+                daily_i.image3 = bytes(aImageNew.data[0].b64_json, "utf-8")
+                print("new image 3 added")
+        db.session.commit()
+        
+    
 # creates database tables if necessary
 with app.app_context():
     db.create_all()
