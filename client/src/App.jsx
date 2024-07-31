@@ -10,7 +10,10 @@ function App() {
   const [guessedList, setGuessedList] = useState([]);
   const [numSubmits, setNumSubmits] = useState(0);
   const [completed, setCompleted] = useState([]);
-  const [image, setImage] = useState("");
+  const [image1, setImage1] = useState("");
+  const [image2, setImage2] = useState("");
+  const [image3, setImage3] = useState("");
+  const [clickedImage, setClickedImage] = useState("");
 
   // on load, fetch info from api and initialize guessedLisst array
   useEffect(() => {
@@ -42,7 +45,10 @@ function App() {
     const response = await fetch("/api/image");
     // const response = await fetch("http://10.0.0.12:5000/api/image");
     const data = await response.json();
-    setImage(data.image.imageb64);
+    setClickedImage(data.image.image1);
+    setImage1(data.image.image1);
+    setImage2(data.image.image2);
+    setImage3(data.image.image3);
   };
 
   // register submits
@@ -73,47 +79,65 @@ function App() {
     return totalGuesses;
   };
 
-  // render the app if an image was loaded
-  if (image != "") {
-    return (
-      <div className="container">
-        <HeaderText />
-        <img
-          className="center"
-          src={"data:image/jpeg;base64," + image}
-          alt=""
-        />
-        {isFullCleared(completed) && (
-          <>
-            <h3 className="box-overlay-high">
-              Congrats! You only messed up {isFullCleared(completed)} times!
-            </h3>
-            <a className="box-overlay-low" href={titleLink} target="_blank" rel="noopener noreferrer">
-              Check out the full story here
-            </a>
-          </>
-        )}
-        <form className="center-form" onSubmit={onSubmit} autoComplete="off">
-          <div>
-            {!isFullCleared(completed) && (
-              <input type="submit" value="Submit"></input>
-            )}
-          </div>
-          <div className="break"></div>
-          {words.map((word) => (
-            <WordBox
-              key={word.id}
-              word={word}
-              guessedList={guessedList}
-              setGuessed={setGuessedList}
-              numSubmits={numSubmits}
-              setCompleted={insertCompleted}
-            />
-          ))}
-        </form>
-      </div>
-    );
+  const switchImage = async (e) => {
+    let clickedId = e.target.id;
+    switch (clickedId) {
+        case "1":
+            setClickedImage(image1);
+            break;
+        case "2":
+            setClickedImage(image2);
+            break;
+        case "3":
+            setClickedImage(image3);
+            break;
+    }
   }
+
+  return (
+    <div className="container">
+      <HeaderText />
+      <img className="center" src={"data:image/jpeg;base64," + clickedImage} alt="" />
+      <div className="center-form">
+        <button id="1" type="button" onClick={switchImage}>1</button>
+        <button id="2" type="button" onClick={switchImage}>2</button>
+        <button id="3" type="button" onClick={switchImage}>3</button>
+      </div>
+      {isFullCleared(completed) && (
+        <>
+          <h3 className="box-overlay-high">
+            Congrats! You only messed up {isFullCleared(completed)} times!
+          </h3>
+          <a
+            className="box-overlay-low"
+            href={titleLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Check out the full story here
+          </a>
+        </>
+      )}
+      <form className="center-form" onSubmit={onSubmit} autoComplete="off">
+        <div>
+          {!isFullCleared(completed) && (
+            <input type="submit" value="Submit"></input>
+          )}
+        </div>
+        <div className="break"></div>
+        {words.map((word) => (
+          <WordBox
+            key={word.id}
+            word={word}
+            guessedList={guessedList}
+            setGuessed={setGuessedList}
+            numSubmits={numSubmits}
+            setCompleted={insertCompleted}
+          />
+        ))}
+      </form>
+    </div>
+  );
 }
 
 export default App;

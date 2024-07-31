@@ -5,7 +5,7 @@ const HeaderText = () => {
   return (
     <div className="center">
       <h1>Scoopdle</h1>
-      <h3>A fresh new game where you fill in the blanks for a news headline based on an AI generated image</h3>
+      <h3>Fill in the blanks for a recent news headline based on AI-generated images</h3>
     </div>
   );
 };

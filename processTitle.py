@@ -2,6 +2,7 @@ import pandas as pd
 from spellchecker import SpellChecker
 import spacy
 from spacy.matcher import Matcher
+from datetime import date
 
 # read reveal words and states from files
 reveal_words = pd.read_csv('revealWords.txt')['RevealWords'].to_list()
@@ -15,7 +16,7 @@ nlp = spacy.load("en_core_web_sm")
 def get_title(app):
     from main import title
     with app.app_context():
-        tt = title.query.order_by(-title.id).first()
+        tt = title.query.filter_by(date=date.today()).first()
     return tt.title
 
 # extracts words from nlp output to list
@@ -30,10 +31,9 @@ def extract_words(app, doc):
 def post_words(db, app, word_list):
     from main import words
     with app.app_context():
-        words.query.delete()
         for word in word_list:
             wordDB = words(
-                id=word[0],  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4])
+                id=word[0],  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4], date=date.today())
             db.session.add(wordDB)
         db.session.commit()
 
@@ -41,8 +41,6 @@ def post_words(db, app, word_list):
 def reveal_proper(app, word_list, doc):
     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
     verbs = [token for token in doc if token.pos_ == "VERB"]
-    print("Noun phrases:", noun_phrases)
-    print("Verbs:", verbs)
     for word in word_list:
         if word[3] in ["PROPN", "PUNCT", "NUM", "AUX"]:
             # will be a future issue where reveal_words keeps growing
