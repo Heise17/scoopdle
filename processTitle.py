@@ -46,7 +46,7 @@ def reveal_proper(app, word_list, doc):
             # will be a future issue where reveal_words keeps growing
             reveal_words.append(word[1])
         lower = word[1].casefold()
-        if lower != speller.correction(lower) or any(char.isdigit() for char in lower) or word[1][:1] != word[1][:1].casefold():
+        if lower != speller.correction(lower) or any(char.isdigit() for char in lower) or (word[1][:1] != word[1][:1].casefold() and word[0] != 0):
             reveal_words.append(word[1])
         noun_phrases = [chunk.text for chunk in doc.noun_chunks]
     for phrase in noun_phrases:
