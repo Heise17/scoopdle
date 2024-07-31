@@ -50,7 +50,6 @@ const WordBox = ({
         setIsInputError(false);
       } else {
         setIsInputError(true);
-        console.log("Input error")
       }
     } else if (!isGuessed){
         setCompleted(word.id, 0, false)
