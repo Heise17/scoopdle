@@ -39,7 +39,7 @@ def post_words(db, app, word_list, postDate):
 # adds non-dictionary words, any strings containing numbers, and capitalized words to the reveal_words list and sets auto_revealed flag to true for that word
 def reveal_proper(word_list, doc):
     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-    verbs = [token for token in doc if token.pos_ == "VERB"]
+    # verbs = [token for token in doc if token.pos_ == "VERB"]
     for word in word_list:
         if word[3] in ["PROPN", "PUNCT", "NUM", "AUX", "SYM"]:
             # will be a future issue where reveal_words keeps growing
@@ -47,13 +47,11 @@ def reveal_proper(word_list, doc):
         lower = word[1].casefold()
         if lower != speller.correction(lower) or any(char.isdigit() for char in lower) or (word[1][:1] != word[1][:1].casefold() and word[0] != 0):
             reveal_words.append(word[1])
-        noun_phrases = [chunk.text for chunk in doc.noun_chunks]
     for phrase in noun_phrases:
         for word in phrase.split():
             if any(word == w for w in state_list):
                 reveal_words.extend(phrase.split())
     for wordNum in range(len(word_list)):
-        wordLength = len(word_list[wordNum][1])
         if word_list[wordNum][1].casefold() in [w.casefold() for w in reveal_words]:
             word_list[wordNum][4] = True
 

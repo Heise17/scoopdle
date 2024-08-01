@@ -1,5 +1,5 @@
 from processTitle import init_title
-from datetime import date as pyDate
+from datetime import date
 from flask import request, jsonify, Flask
 import io, base64, os
 from PIL import Image
@@ -79,14 +79,14 @@ class aimage(db.Model):
 @app.route("/api/title", methods=["GET"])
 @cross_origin()
 def fetch_title():
-    tt = title.query.filter_by(date=pyDate.today()).one()
+    tt = title.query.filter_by(date=date.today()).one()
     return jsonify({"title": tt.to_json()})
 
 # endpoint for words and word info
 @app.route("/api/words", methods=["GET"])
 @cross_origin()
 def fetch_words():
-    ws = words.query.filter_by(date = pyDate.today())
+    ws = words.query.filter_by(date = date.today())
     json_words = list(map(lambda x: x.to_json(), ws))
     return jsonify({"words": json_words})
 
@@ -94,7 +94,7 @@ def fetch_words():
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    ii = aimage.query.filter_by(date = pyDate.today()).one()
+    ii = aimage.query.filter_by(date = date.today()).one()
     return jsonify({"image": ii.to_json()})
 
 # serves homepage
@@ -110,7 +110,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
     print("update started")
     # #add new title to DB
     with app.app_context():
-        tt = title(date=pyDate(y, m, d), title=newTitle, link=newTitleLink)
+        tt = title(date=date(y, m, d), title=newTitle, link=newTitleLink)
         db.session.add(tt)
         db.session.commit()
         
@@ -146,16 +146,16 @@ def update_title(newTitle, newTitleLink, y, m, d):
     
     # post OpenAI image to database and activate title
     with app.app_context():
-        mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=pyDate(y, m, d))
+        mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=date(y, m, d))
         db.session.add(mi)
         db.session.commit()
-        init_title(db, app, pyDate(y, m, d))
+        init_title(db, app, date(y, m, d))
         
     print("title init complete")
     
 def switch_image(imageNum):
     with app.app_context():
-        currTitle = title.query.filter_by(date = pyDate.today()).one()
+        currTitle = title.query.filter_by(date = date.today()).one()
         aImageNew = client.images.generate(
             response_format="b64_json",
             model="dall-e-3",
@@ -164,7 +164,7 @@ def switch_image(imageNum):
             quality="standard",
             n=1
         )
-        daily_i = db.session.query(aimage).filter_by(date = pyDate.today()).one()
+        daily_i = db.session.query(aimage).filter_by(date = date.today()).one()
         match imageNum:
             case 1:
                 daily_i.image1 = bytes(aImageNew.data[0].b64_json, "utf-8")
