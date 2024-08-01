@@ -114,7 +114,6 @@ def update_title(newTitle, newTitleLink, y, m, d):
         db.session.add(tt)
         db.session.commit()
         
-    print("starting i1")
     # query OpenAI, return image as b64 string
     aImage1 = client.images.generate(
         response_format="b64_json",
