@@ -2,7 +2,6 @@ import pandas as pd
 from spellchecker import SpellChecker
 import spacy
 from spacy.matcher import Matcher
-from datetime import date
 
 # read reveal words and states from files
 reveal_words = pd.read_csv('revealWords.txt')['RevealWords'].to_list()
@@ -20,7 +19,7 @@ def get_title(app, postDate):
     return tt.title
 
 # extracts words from nlp output to list
-def extract_words(app, doc):
+def extract_words(doc):
     titleWords = []
     for wordNum, word in enumerate(doc):
         titleWords.append(
@@ -38,7 +37,7 @@ def post_words(db, app, word_list, postDate):
         db.session.commit()
 
 # adds non-dictionary words, any strings containing numbers, and capitalized words to the reveal_words list and sets auto_revealed flag to true for that word
-def reveal_proper(app, word_list, doc):
+def reveal_proper(word_list, doc):
     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
     verbs = [token for token in doc if token.pos_ == "VERB"]
     for word in word_list:
@@ -62,6 +61,6 @@ def reveal_proper(app, word_list, doc):
 def init_title(db, app, postDate):
     title_string = get_title(app, postDate)
     doc = nlp(title_string)
-    title_words = extract_words(app, doc)
-    reveal_proper(app, title_words, doc)
+    title_words = extract_words(doc)
+    reveal_proper(title_words, doc)
     post_words(db, app, title_words, postDate)
