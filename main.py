@@ -1,5 +1,6 @@
 from processTitle import init_title
 from datetime import date
+import datetime
 from flask import request, jsonify, Flask
 import io, base64, os
 from PIL import Image
@@ -40,6 +41,7 @@ class title(db.Model):
 # words databse table
 class words(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    word_num = db.Column(db.Integer, unique=False, nullable=False)
     num_letters = db.Column(db.Integer, unique=False, nullable=False)
     word = db.Column(db.String(30), unique=False, nullable=False)
     pos = db.Column(db.String(30), unique=False, nullable=False)
@@ -49,6 +51,7 @@ class words(db.Model):
     def to_json(self):
         return {
             "id": self.id,
+            "wordNum": self.word_num,
             "numLetters": self.num_letters,
             "word": self.word,
             "pos": self.pos,
@@ -147,7 +150,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
         mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=date(y, m, d))
         db.session.add(mi)
         db.session.commit()
-        init_title(db, app)
+        init_title(db, app, date(y, m, d))
         
     print("title init complete")
     

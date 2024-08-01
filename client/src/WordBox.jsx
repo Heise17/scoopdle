@@ -21,11 +21,11 @@ const WordBox = ({
   const updateGuessed = (inputWord) => {
     let newArr = [...guessedList];
     if (inputWord.length > word.word.length){
-        newArr[word.id] = inputWord.slice(0, -1);
+        newArr[word.wordNum] = inputWord.slice(0, -1);
         setGuessed(newArr);
         setField(inputWord.slice(0, -1));
     } else {
-        newArr[word.id] = inputWord;
+        newArr[word.wordNum] = inputWord;
         setGuessed(newArr);
         setField(inputWord)
     }
@@ -33,18 +33,21 @@ const WordBox = ({
 
   // each time guesses are submitted the guessed/completed states are updated and necessary words revealed
   useEffect(() => {
-    if (typeof word.id !== "undefined" && word.autoRevealed) {
-      setCompleted(word.id, wordsGuessed.length, true);
+    if (typeof word.wordNum !== "undefined" && word.autoRevealed) {
+      setCompleted(word.wordNum, wordsGuessed.length, true);
       setGuessed(true);
-    } else if (guessedList[word.id]) {
-      if (guessedList[word.id].length >= word.word.length) {
-        setWordsGuessed([...wordsGuessed, guessedList[word.id]]);
+    } else if (guessedList[word.wordNum]) {
+      if (guessedList[word.wordNum].length >= word.word.length && !wordsGuessed.includes(guessedList[word.wordNum])) {
+        setWordsGuessed([...wordsGuessed, guessedList[word.wordNum]]);
         let tempArr = lettersGuessed;
-        tempArr.push(guessedList[word.id].split(""));
+        tempArr.push(guessedList[word.wordNum].split(""));
         setLettersGuessed(tempArr);
-        if (guessedList[word.id].toLowerCase() == word.word.toLowerCase()) {
-          setCompleted(word.id, wordsGuessed.length, true);
+        if (guessedList[word.wordNum].toLowerCase() == word.word.toLowerCase()) {
+          setCompleted(word.wordNum, wordsGuessed.length, true);
           setIsGuessed(true);
+        } else {
+          setIsGuessed(false);
+          setCompleted(word.wordNum, wordsGuessed.length + 1, false);
         }
         setField("");
         setIsInputError(false);
@@ -52,10 +55,14 @@ const WordBox = ({
         setIsInputError(true);
       }
     } else if (!isGuessed){
-        setCompleted(word.id, 0, false)
+        setCompleted(word.wordNum, wordsGuessed.length, false)
     }
     setGuessed([]);
   }, [numSubmits]);
+
+  useEffect(() => {
+
+  }, [guessedList])
 
   // checks to ensure the word has been populated
   if (!word) {
@@ -93,15 +100,15 @@ const WordBox = ({
     let blankStr = "-";
     // displays box with word unrevealed
     return (
-      <div key={word.id} className="center">
+      <div key={word.wordNum} className="center">
         <div className="center-grid">
           <high-label>{word.numLetters}</high-label>
           <low-label>{word.pos}</low-label>
           <input-overlay>{blankStr.repeat(word.numLetters)}</input-overlay>
           {!isInputError && <input
             className="no-outline"
-            id={word.id}
-            name={word.id}
+            id={word.wordNum}
+            name={word.wordNum}
             maxLength={word.numLetters}
             size={word.numLetters - 1}
             value={field}
@@ -109,8 +116,8 @@ const WordBox = ({
           />}
           {isInputError && <input
             className="red-outline"
-            id={word.id}
-            name={word.id}
+            id={word.wordNum}
+            name={word.wordNum}
             maxLength={word.numLetters}
             size={word.numLetters - 1}
             value={field}
