@@ -1,9 +1,12 @@
 .container {
-  max-width: fit-content;
-  margin: 0 auto 50px;
-  display: block;
-  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 20px 45px 20px;
   text-align: center;
+  background-color: #2e2e2e;
+  max-height: fit-content;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .center {
@@ -13,11 +16,22 @@
 }
 
 .center-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  row-gap: 5px;
+  display: block;
   justify-content: center;
+  text-align: center;
+}
+
+.center-button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    justify-content: center;
+    margin: 0 auto 8px auto;
+    height: 40px;
+    width: 320px;
+    border-radius: 3px;
+    background-color: #2e2e2e;
 }
 
 .center-grid {
@@ -42,10 +56,13 @@
 }
 
 .button-overlay {
-    margin-left: -115px;
+    margin-left: -103px;
+    position: relative;
+    top: 2px;
     z-index: 2;
+    height: 41px;
     font-size: .9em;
-    color: gray;
+    color: rgb(163, 163, 163);
 }
 
 .inactive-button {
@@ -54,49 +71,115 @@
 
 .active-button {
     font-weight: bold;
-    border: 3px solid black;
-    border-radius: 5px;
+    border: 5px solid white;
+    border-radius: 3px;
+}
+
+.round-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    justify-content: center;
+    background-color: #1d1d1d;
+    justify-self: center;
+    border-radius: 8px;
+    margin: 0 0 18px 0;
+    padding: 10px 0 10px 0;
+}
+
+.round-fin {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    justify-content: center;
+    background-color: #1d1d1d;
+    justify-self: center;
+    border-radius: 8px;
+    margin: 0 0 12px 0;
+    padding: -20px 0 10px 0;
+}
+
+.round-block {
+    row-gap: 5px;
+    justify-content: center;
+    background-color: #1d1d1d;
+    justify-self: center;
+    border-radius: 8px;
+    margin: 0 0 12px 0;
+    padding: 10px 0 10px 0;
+}
+
+.bottom-tag {
+    position: absolute;
+    bottom: 5px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.bottom-link {
+    font-size: .9em;
 }
 
 h1 {
-  margin: 0 auto;
+  margin: 5px auto;
   font-size: 3em;
   font-weight: bold;
   justify-content: center;
   text-align: center;
+  color: white;
 }
 
 h3 {
-  margin: 0 auto 10px;
+  margin: 0 10px 10px;
   justify-content: center;
   text-align: center;
+  font-weight: normal;
+  color: white;
 }
 
 img {
   max-width: 100%;
   margin: 0 auto;
+  border: 3px solid #1d1d1d;
+  border-radius: 3px;
+  position: relative;
+  right: 3px;
 }
 
 a {
   font-family: monospace;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.3em;
+  color: white;
 }
 
 button {
   font-family: monospace;
   font-size: 2em;
-  width: 110px;
-  margin: 10px 5px 10px;
+  width: 100px;
+  height: 40px;
+  margin: 10px 3px 10px;
+  border-radius: 5px;
+  background-color: #2e2e2e;
+  color: white;
+}
+
+span {
+    font-size: .9em;
+    font-family: monospace;
 }
 
 @media all and (min-width: 500px) {
   .container {
-    max-width: fit-content;
     display: block;
     justify-content: center;
     text-align: center;
-    bottom: 10px;
+    max-width: 1200px;
+    min-height: 92%;
+    max-height: max-content;
   }
   .box-overlay-low {
     display: block;
@@ -104,7 +187,6 @@ button {
     position: relative;
     top: 14px;
   }
-
   .box-overlay-high {
     display: block;
     height: 0;
@@ -118,7 +200,22 @@ button {
     font-family: monospace;
     font-weight: bold;
     font-size: 2em;
-    width: 110px;
+    width: 100px;
     margin: 0px 5px 10px;
+  }
+  .button-overlay {
+    top: 3px;
+    margin-left: -105px;
+  }
+  .round-box {
+    margin: 0 15px 16px 15px;
+  }
+
+  .round-block {
+    margin: 0 15px 12px 15px;
+  }
+
+  .round-fin {
+    margin: 0 15px 12px 15px;
   }
 }
