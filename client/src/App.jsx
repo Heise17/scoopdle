@@ -117,7 +117,13 @@ function App() {
   return (
     <div className="container">
       <div className="round-box">
-        <HeaderText />
+        <div className="center">
+          <h1>Scoopdle</h1>
+          <h3>
+            Get the scoop by filling in the blanks for a recent news headline based on AI-generated
+            images
+          </h3>
+        </div>
       </div>
       <img
         className="center"
@@ -141,9 +147,9 @@ function App() {
         >
           2
         </button>
-        {numGuesses(completed) < 3 && !isFullCleared(completed) && (
+        {numGuesses(completed) < 2 && !isFullCleared(completed) && (
           <button className="button-overlay">
-            Locked until {3 - numGuesses(completed)} more misses
+            Locked - {2 - numGuesses(completed)} more missed words
           </button>
         )}
         <button
@@ -154,9 +160,9 @@ function App() {
         >
           3
         </button>
-        {numGuesses(completed) < 6 && !isFullCleared(completed) && (
+        {numGuesses(completed) < 4 && !isFullCleared(completed) && (
           <button className="button-overlay">
-            Locked until {6 - numGuesses(completed)} more misses
+            Locked - {4 - numGuesses(completed)} more missed words
           </button>
         )}
       </div>
