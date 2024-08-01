@@ -110,7 +110,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
     print("update started")
     # #add new title to DB
     with app.app_context():
-        tt = title(date=date(y, m, d), title=newTitle, link=newTitleLink)
+        tt = title(date=pyDate(y, m, d), title=newTitle, link=newTitleLink)
         db.session.add(tt)
         db.session.commit()
         
@@ -149,7 +149,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
         mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=date(y, m, d))
         db.session.add(mi)
         db.session.commit()
-        init_title(db, app, date(y, m, d))
+        init_title(db, app, pyDate(y, m, d))
         
     print("title init complete")
     
