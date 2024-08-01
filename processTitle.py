@@ -13,10 +13,10 @@ speller = SpellChecker()
 nlp = spacy.load("en_core_web_sm")
 
 # Extract title string from DB
-def get_title(app):
+def get_title(app, postDate):
     from main import title
     with app.app_context():
-        tt = title.query.filter_by(date=date.today()).first()
+        tt = title.query.filter_by(date=postDate).one()
     return tt.title
 
 # extracts words from nlp output to list
@@ -28,12 +28,12 @@ def extract_words(app, doc):
     return titleWords
 
 # posts words and word info to database
-def post_words(db, app, word_list):
+def post_words(db, app, word_list, postDate):
     from main import words
     with app.app_context():
         for word in word_list:
             wordDB = words(
-                id=word[0],  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4], date=date.today())
+                word_num=word[0],  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4], date=postDate)
             db.session.add(wordDB)
         db.session.commit()
 
@@ -42,7 +42,7 @@ def reveal_proper(app, word_list, doc):
     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
     verbs = [token for token in doc if token.pos_ == "VERB"]
     for word in word_list:
-        if word[3] in ["PROPN", "PUNCT", "NUM", "AUX"]:
+        if word[3] in ["PROPN", "PUNCT", "NUM", "AUX", "SYM"]:
             # will be a future issue where reveal_words keeps growing
             reveal_words.append(word[1])
         lower = word[1].casefold()
@@ -59,9 +59,9 @@ def reveal_proper(app, word_list, doc):
             word_list[wordNum][4] = True
 
 # analyzes and activates title from database
-def init_title(db, app):
-    title_string = get_title(app)
+def init_title(db, app, postDate):
+    title_string = get_title(app, postDate)
     doc = nlp(title_string)
     title_words = extract_words(app, doc)
     reveal_proper(app, title_words, doc)
-    post_words(db, app, title_words)
+    post_words(db, app, title_words, postDate)
