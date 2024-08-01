@@ -146,7 +146,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
     
     # post OpenAI image to database and activate title
     with app.app_context():
-        mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=date(y, m, d))
+        mi = aimage(image1=bytes(aImage1.data[0].b64_json, "utf-8"), image2=bytes(aImage2.data[0].b64_json, "utf-8"), image3=bytes(aImage3.data[0].b64_json, "utf-8"), date=pyDate(y, m, d))
         db.session.add(mi)
         db.session.commit()
         init_title(db, app, pyDate(y, m, d))
