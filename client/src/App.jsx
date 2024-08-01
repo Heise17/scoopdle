@@ -82,7 +82,9 @@ function App() {
   const numGuesses = (completedArr) => {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
-      totalGuesses += wordState[1];
+      if (typeof wordState[1] !== "undefined") {
+        totalGuesses += wordState[1];
+      }
     }
     return totalGuesses;
   };
