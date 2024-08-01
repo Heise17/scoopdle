@@ -1,6 +1,5 @@
 from processTitle import init_title
-from datetime import date
-import datetime
+from datetime import date, datetime
 from flask import request, jsonify, Flask
 import io, base64, os
 from PIL import Image
@@ -80,14 +79,14 @@ class aimage(db.Model):
 @app.route("/api/title", methods=["GET"])
 @cross_origin()
 def fetch_title():
-    tt = title.query.filter_by(date = date.today()).one()
+    tt = title.query.filter_by(date=datetime.today()).one()
     return jsonify({"title": tt.to_json()})
 
 # endpoint for words and word info
 @app.route("/api/words", methods=["GET"])
 @cross_origin()
 def fetch_words():
-    ws = words.query.filter_by(date = date.today())
+    ws = words.query.filter_by(date = datetime.today())
     json_words = list(map(lambda x: x.to_json(), ws))
     return jsonify({"words": json_words})
 
@@ -95,7 +94,7 @@ def fetch_words():
 @app.route("/api/image", methods=["GET"])
 @cross_origin()
 def fetch_image():
-    ii = aimage.query.filter_by(date = date.today()).one()
+    ii = aimage.query.filter_by(date = datetime.today()).one()
     return jsonify({"image": ii.to_json()})
 
 # serves homepage
@@ -156,7 +155,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
     
 def switch_image(imageNum):
     with app.app_context():
-        currTitle = title.query.filter_by(date = date.today()).one()
+        currTitle = title.query.filter_by(date = datetime.today()).one()
         aImageNew = client.images.generate(
             response_format="b64_json",
             model="dall-e-3",
@@ -165,7 +164,7 @@ def switch_image(imageNum):
             quality="standard",
             n=1
         )
-        daily_i = db.session.query(aimage).filter_by(date = date.today()).one()
+        daily_i = db.session.query(aimage).filter_by(date = datetime.today()).one()
         match imageNum:
             case 1:
                 daily_i.image1 = bytes(aImageNew.data[0].b64_json, "utf-8")
