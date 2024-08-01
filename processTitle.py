@@ -32,7 +32,7 @@ def post_words(db, app, word_list, postDate):
     with app.app_context():
         for word in word_list:
             wordDB = words(
-                word_num=word[0]+1,  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4], date=postDate)
+                word_num=word[0],  word=word[1], num_letters=word[2], pos=word[3], auto_revealed=word[4], date=postDate)
             db.session.add(wordDB)
         db.session.commit()
 
