@@ -82,7 +82,8 @@ function App() {
   const numGuesses = (completedArr) => {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
-      if (typeof wordState !== "undefined") { //problem here
+      if (typeof wordState !== "undefined") {
+        //problem here
         totalGuesses += wordState[1];
       }
     }
@@ -115,7 +116,9 @@ function App() {
 
   return (
     <div className="container">
-      <HeaderText />
+      <div className="round-box">
+        <HeaderText />
+      </div>
       <img
         className="center"
         src={"data:image/jpeg;base64," + clickedImage}
@@ -158,38 +161,62 @@ function App() {
         )}
       </div>
       {isFullCleared(completed) && (
-        <>
-          <h3 className="box-overlay-high">
+        <div className="round-block">
+          <h3>
             Congrats! You only messed up {isFullCleared(completed)} times!
           </h3>
-          <a
-            className="box-overlay-low"
-            href={titleLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={titleLink} target="_blank" rel="noopener noreferrer">
             Check out the full story here
           </a>
-        </>
+        </div>
       )}
       <form className="center-form" onSubmit={onSubmit} autoComplete="off">
         <div>
           {!isFullCleared(completed) && (
-            <input type="submit" value="Submit"></input>
+            <input
+              className="center-button"
+              type="submit"
+              value="Submit"
+            ></input>
           )}
         </div>
         <div className="break"></div>
-        {words.map((word) => (
-          <WordBox
-            key={word.id}
-            word={word}
-            guessedList={guessedList}
-            setGuessed={setGuessedList}
-            numSubmits={numSubmits}
-            setCompleted={insertCompleted}
-          />
-        ))}
+        <div className="round-box">
+          {words.map((word) => (
+            <WordBox
+              key={word.id}
+              word={word}
+              guessedList={guessedList}
+              setGuessed={setGuessedList}
+              numSubmits={numSubmits}
+              setCompleted={insertCompleted}
+            />
+          ))}
+        </div>
       </form>
+      <div className="bottom-tag">
+        <span>Created by Brandon Heise</span>
+        <br></br>
+        <span>Images generated with </span>
+        <a
+          className="bottom-link"
+          href="https://openai.com/index/dall-e-3/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          DALL·E 3 by OpenAI
+        </a>
+        <br></br>
+        <span>Contact me at </span>
+        <a
+          className="bottom-link"
+          href="mailto:brandoncodesnow@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          BrandonCodesNow@gmail.com
+        </a>
+      </div>
     </div>
   );
 }
