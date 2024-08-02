@@ -110,6 +110,10 @@ def update_title(newTitle, newTitleLink, y, m, d):
     print("update started")
     # #add new title to DB
     with app.app_context():
+        words.query.filter_by(date = date(y, m, d)).delete()
+        title.query.filter_by(date = date(y, m, d)).delete()
+        aimage.query.filter_by(date = date(y, m, d)).delete()
+        db.session.commit()
         tt = title(date=date(y, m, d), title=newTitle, link=newTitleLink)
         db.session.add(tt)
         db.session.commit()
