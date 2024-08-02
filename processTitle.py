@@ -47,10 +47,10 @@ def reveal_proper(word_list, doc):
         lower = word[1].casefold()
         if lower != speller.correction(lower) or any(char.isdigit() for char in lower) or (word[1][:1] != word[1][:1].casefold() and word[0] != 0):
             reveal_words.append(word[1])
-    for phrase in noun_phrases:
-        for word in phrase.split():
-            if any(word == w for w in state_list):
-                reveal_words.extend(phrase.split())
+    # for phrase in noun_phrases:
+    #     for word in phrase.split():
+    #         if any(word == w for w in state_list):
+    #             reveal_words.extend(phrase.split())
     for wordNum in range(len(word_list)):
         if word_list[wordNum][1].casefold() in [w.casefold() for w in reveal_words]:
             word_list[wordNum][4] = True
