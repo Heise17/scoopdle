@@ -7,4 +7,5 @@ html, body, #root {
     background-color: #1d1d1d;
     height: 100%;
     color: white;
+    font-family: 'Courier New', Courier, monospace;
 }

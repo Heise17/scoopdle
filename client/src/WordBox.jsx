@@ -20,14 +20,14 @@ const WordBox = ({
   // modifies guessedList state to include current state for this wordbox
   const updateGuessed = (inputWord) => {
     let newArr = [...guessedList];
-    if (inputWord.length > word.word.length){
-        newArr[word.wordNum] = inputWord.slice(0, -1);
-        setGuessed(newArr);
-        setField(inputWord.slice(0, -1));
+    if (inputWord.length > word.word.length) {
+      newArr[word.wordNum] = inputWord.slice(0, -1);
+      setGuessed(newArr);
+      setField(inputWord.slice(0, -1));
     } else {
-        newArr[word.wordNum] = inputWord;
-        setGuessed(newArr);
-        setField(inputWord)
+      newArr[word.wordNum] = inputWord;
+      setGuessed(newArr);
+      setField(inputWord);
     }
   };
 
@@ -37,12 +37,17 @@ const WordBox = ({
       setCompleted(word.wordNum, wordsGuessed.length, true);
       setGuessed(true);
     } else if (guessedList[word.wordNum]) {
-      if (guessedList[word.wordNum].length >= word.word.length && !wordsGuessed.includes(guessedList[word.wordNum])) {
+      if (
+        guessedList[word.wordNum].length >= word.word.length &&
+        !wordsGuessed.includes(guessedList[word.wordNum])
+      ) {
         setWordsGuessed([...wordsGuessed, guessedList[word.wordNum]]);
         let tempArr = lettersGuessed;
         tempArr.push(guessedList[word.wordNum].split(""));
         setLettersGuessed(tempArr);
-        if (guessedList[word.wordNum].toLowerCase() == word.word.toLowerCase()) {
+        if (
+          guessedList[word.wordNum].toLowerCase() == word.word.toLowerCase()
+        ) {
           setCompleted(word.wordNum, wordsGuessed.length, true);
           setIsGuessed(true);
         } else {
@@ -54,15 +59,13 @@ const WordBox = ({
       } else {
         setIsInputError(true);
       }
-    } else if (!isGuessed){
-        setCompleted(word.wordNum, wordsGuessed.length, false)
+    } else if (!isGuessed) {
+      setCompleted(word.wordNum, wordsGuessed.length, false);
     }
     setGuessed([]);
   }, [numSubmits]);
 
-  useEffect(() => {
-
-  }, [guessedList])
+  useEffect(() => {}, [guessedList]);
 
   // checks to ensure the word has been populated
   if (!word) {
@@ -76,10 +79,18 @@ const WordBox = ({
     return (
       <div className="center">
         <div className="center-grid">
-          {word.autoRevealed && word.word == "-" && <b className="dash">{word.word}</b>}
-          {!word.autoRevealed && word.word == "-" && <g-b className="dash">{word.word}</g-b>}          
-          {word.autoRevealed && isPunct && word.word != "-" && <b className="punct">{word.word}</b>}
-          {!word.autoRevealed && isPunct && word.word != "-" && <g-b className="punct">{word.word}</g-b>}          
+          {word.autoRevealed && word.word == "-" && (
+            <b className="dash">{word.word}</b>
+          )}
+          {!word.autoRevealed && word.word == "-" && (
+            <g-b className="dash">{word.word}</g-b>
+          )}
+          {word.autoRevealed && isPunct && word.word != "-" && (
+            <b className="punct">{word.word}</b>
+          )}
+          {!word.autoRevealed && isPunct && word.word != "-" && (
+            <g-b className="punct">{word.word}</g-b>
+          )}
           {word.autoRevealed && !isPunct && <b>{word.word}</b>}
           {!word.autoRevealed && !isPunct && <g-b>{word.word}</g-b>}
         </div>
@@ -105,24 +116,26 @@ const WordBox = ({
           <high-label>{word.numLetters}</high-label>
           <low-label>{word.pos}</low-label>
           <input-overlay>{blankStr.repeat(word.numLetters)}</input-overlay>
-          {!isInputError && <input
+          <input
             className="no-outline"
             id={word.wordNum}
             name={word.wordNum}
             maxLength={word.numLetters}
-            size={word.numLetters - 1}
+            size={word.numLetters}
             value={field}
             onChange={(e) => updateGuessed(e.target.value)}
-          />}
-          {isInputError && <input
-            className="red-outline"
-            id={word.wordNum}
-            name={word.wordNum}
-            maxLength={word.numLetters}
-            size={word.numLetters - 1}
-            value={field}
-            onChange={(e) => updateGuessed(e.target.value)}
-          />}
+          />
+          {isInputError && (
+            <input
+              className="red-outline"
+              id={word.wordNum}
+              name={word.wordNum}
+              maxLength={word.numLetters}
+              size={word.numLetters}
+              value={field}
+              onChange={(e) => updateGuessed(e.target.value)}
+            />
+          )}
         </div>
         <div className="break"></div>
         {lettersGuessed.toReversed().map((guessedWord) => (

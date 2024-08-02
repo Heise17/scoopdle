@@ -5,8 +5,7 @@ no-space-red {
   padding-right: 0px;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 1.5em;
-  font-family: monospace;
+  font-size: 1.2em;
   color: rgb(255, 45, 45);
 }
 
@@ -17,8 +16,7 @@ no-space-green {
   padding-right: 0px;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 1.5em;
-  font-family: monospace;
+  font-size: 1.2em;
   color: rgb(0, 202, 0);
 }
 
@@ -29,9 +27,12 @@ no-space-orange {
   padding-right: 0px;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 1.5em;
-  font-family: monospace;
+  font-size: 1.2em;
   color: rgb(255, 208, 0);
+}
+
+.guessed-box {
+  position: relative;
 }
 
 @media all and (max-width: 500px) {
@@ -42,8 +43,7 @@ no-space-orange {
     padding-right: 0px;
     margin-top: 10px;
     font-weight: bold;
-    font-size: 1.2em;
-    font-family: monospace;
+    font-size: .9em;
     color: rgb(255, 45, 45);
   }
 
@@ -54,8 +54,7 @@ no-space-orange {
     padding-right: 0px;
     margin-top: 10px;
     font-weight: bold;
-    font-size: 1.2em;
-    font-family: monospace;
+    font-size: .9em;
     color: rgb(0, 202, 0);
   }
 
@@ -66,8 +65,8 @@ no-space-orange {
     padding-right: 0px;
     margin-top: 10px;
     font-weight: bold;
-    font-size: 1.2em;
-    font-family: monospace;
+    font-size: .9em;
     color: rgb(255, 208, 0);
   }
+
 }

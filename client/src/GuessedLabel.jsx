@@ -30,7 +30,7 @@ const GuessedLabel = ({ letters, corrWord }) => {
 
   // display each letter's color based on its state
   return (
-    <div>
+    <div className="guessed-box">
       {letters.map(
         (letter, i) =>
           (isContained[i] && !isMatch[i] && <no-space-orange key={i}>{letter}</no-space-orange>) ||
