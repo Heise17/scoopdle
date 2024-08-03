@@ -102,7 +102,7 @@ g-b {
     margin-right: -6px;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 550px) {
   input {
     font-weight: bold;
     font-size: 1.2em;
@@ -114,13 +114,13 @@ g-b {
   high-label {
     font-size: 1em;
     position: relative;
-    right: 2px;
+    left: 1px;
   }
 
   low-label {
     font-size: .8em;
     position: relative;
-    right: 2px;
+    left: 1px;
   }
 
   input-overlay {
@@ -133,7 +133,6 @@ g-b {
     user-select: none;
     font-weight: bold;
     top: 5px;
-    right: 2px;
     margin: 0px;
   }
   
