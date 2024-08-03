@@ -134,7 +134,6 @@ function App() {
               help
             </button>
           </div>
-          <h3> Pat Gay </h3>
           <h3>
             Get the scoop by filling in the blanks for a recent news headline
             based on AI-generated images
