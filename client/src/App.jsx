@@ -179,7 +179,7 @@ function App() {
         src={"data:image/jpeg;base64," + clickedImage}
         alt=""
       />
-      <div className="center-form">
+      <div className="flex-h">
         <button
           id="1"
           type="button"
@@ -199,7 +199,7 @@ function App() {
           </button>
         )}
         {numGuesses(completed) < 2 && !isFullCleared(completed) && (
-          <button className="button-overlay">
+          <button id="2l" type="button" className="button-overlay">
             Locked - {2 - numGuesses(completed)} more misses
           </button>
         )}
@@ -214,7 +214,7 @@ function App() {
           </button>
         )}
         {numGuesses(completed) < 4 && !isFullCleared(completed) && (
-          <button className="button-overlay">
+          <button id="3l" type="button" className="button-overlay">
             Locked - {4 - numGuesses(completed)} more misses
           </button>
         )}
