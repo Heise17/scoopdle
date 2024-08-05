@@ -37,7 +37,7 @@ class title(db.Model):
             "link": self.link
         }
 
-# words databse table
+# words database table
 class words(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     word_num = db.Column(db.Integer, unique=False, nullable=False)
@@ -46,6 +46,33 @@ class words(db.Model):
     pos = db.Column(db.String(30), unique=False, nullable=False)
     auto_revealed = db.Column(db.Boolean, unique=False, nullable=False)
     date = db.Column(db.Date, unique=False, nullable=False)
+    a = db.Column(db.Integer, unique=False, nullable = False)
+    b = db.Column(db.Integer, unique=False, nullable = False)
+    c = db.Column(db.Integer, unique=False, nullable = False)
+    d = db.Column(db.Integer, unique=False, nullable = False)
+    e = db.Column(db.Integer, unique=False, nullable = False)
+    f = db.Column(db.Integer, unique=False, nullable = False)
+    g = db.Column(db.Integer, unique=False, nullable = False)
+    h = db.Column(db.Integer, unique=False, nullable = False)
+    i = db.Column(db.Integer, unique=False, nullable = False)
+    j = db.Column(db.Integer, unique=False, nullable = False)
+    k = db.Column(db.Integer, unique=False, nullable = False)
+    l = db.Column(db.Integer, unique=False, nullable = False)
+    m = db.Column(db.Integer, unique=False, nullable = False)
+    n = db.Column(db.Integer, unique=False, nullable = False)
+    o = db.Column(db.Integer, unique=False, nullable = False)
+    p = db.Column(db.Integer, unique=False, nullable = False)
+    q = db.Column(db.Integer, unique=False, nullable = False)
+    r = db.Column(db.Integer, unique=False, nullable = False)
+    s = db.Column(db.Integer, unique=False, nullable = False)
+    t = db.Column(db.Integer, unique=False, nullable = False)
+    u = db.Column(db.Integer, unique=False, nullable = False)
+    v = db.Column(db.Integer, unique=False, nullable = False)
+    w = db.Column(db.Integer, unique=False, nullable = False)
+    x = db.Column(db.Integer, unique=False, nullable = False)
+    y = db.Column(db.Integer, unique=False, nullable = False)
+    z = db.Column(db.Integer, unique=False, nullable = False)
+    
     
     def to_json(self):
         return {
@@ -55,7 +82,7 @@ class words(db.Model):
             "word": self.word,
             "pos": self.pos,
             "autoRevealed": self.auto_revealed,
-            "date": self.date
+            "date": self.date,
         }
 
 # aimage database table
@@ -118,7 +145,7 @@ def update_title(newTitle, newTitleLink, y, m, d):
         db.session.add(tt)
         db.session.commit()
         
-    # query OpenAI, return image as b64 string
+    # # query OpenAI, return image as b64 string
     aImage1 = client.images.generate(
         response_format="b64_json",
         model="dall-e-3",

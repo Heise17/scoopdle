@@ -12,12 +12,13 @@ const GuessedLabel = ({ letters, corrWord }) => {
     let tContained = new Array(letters.length);
     for (let i = 0; i < letters.length; i++) {
       // check for exact match
-      if (letters[i].toLowerCase() == corrWord.split("")[i].toLowerCase()) {
+      if (letters[i].toLowerCase() == corrWord.word.split("")[i].toLowerCase()) {
         tMatch[i] = true;
       } else {
         tMatch[i] = false;
         // check if word contains letter
-        if (corrWord.toLowerCase().split("").includes(letters[i].toLowerCase())) {
+        if (corrWord.word.toLowerCase().split("").includes(letters[i].toLowerCase())) {
+            
             tContained[i] = true;
         } else {
             tContained[i] = false;

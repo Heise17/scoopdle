@@ -102,7 +102,7 @@ const WordBox = ({
             <GuessedLabel
               key={guessedWord}
               letters={guessedWord}
-              corrWord={word.word}
+              corrWord={word}
             />
           ))}
       </div>
@@ -142,7 +142,7 @@ const WordBox = ({
           <GuessedLabel
             key={guessedWord}
             letters={guessedWord}
-            corrWord={word.word}
+            corrWord={word}
           />
         ))}
       </div>

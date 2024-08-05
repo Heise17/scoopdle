@@ -214,6 +214,11 @@ span {
   font-size: 0.9em;
 }
 
+.loader-spacing {
+    margin-top: 180px;
+    margin-bottom: 180px;
+}
+
 @media all and (min-width: 550px) {
   .container {
     display: block;
