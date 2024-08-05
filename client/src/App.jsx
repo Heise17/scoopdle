@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import HeaderText from "./HeaderText";
 import WordBox from "./WordBox";
+import {FidgetSpinner} from 'react-loader-spinner';
 
 function App() {
   const [title, setTitle] = useState("");
@@ -27,7 +27,7 @@ function App() {
   // fetch title from api
   const fetchTitle = async () => {
     const response = await fetch("/api/title");
-    // const response = await fetch("http://10.0.0.12:5000/api/title");
+    // const response = await fetch("http://10.0.0/.12:5000/api/title");
     const data = await response.json();
     setTitle(data.title.title);
     setTitleLink(data.title.link);
@@ -84,7 +84,6 @@ function App() {
     let totalGuesses = 0;
     for (const wordState of completedArr) {
       if (typeof wordState !== "undefined") {
-        //problem here
         totalGuesses += wordState[1];
       }
     }
@@ -116,7 +115,11 @@ function App() {
   };
 
   const setHelp = () => {
-    setIsHelp(true);
+    if (!isHelp) {
+        setIsHelp(true);
+    } else {
+        setIsHelp(false)
+    }
   };
 
   const setHelpOff = () => {
@@ -130,7 +133,7 @@ function App() {
           <div className="flex-h">
             <span className="invis-icon"></span>
             <h1>Scoopdle</h1>
-            <button className="material-symbols-outlined" onFocus={setHelp}>
+            <button type="button" className="material-symbols-outlined" onClick={setHelp}>
               help
             </button>
           </div>
@@ -143,7 +146,7 @@ function App() {
       {isHelp && (
         <div className="round-thin">
           <div className="top-right">
-            <button className="material-symbols-outlined" onClick={setHelpOff}>close</button>
+            <button type="button" className="material-symbols-outlined" onClick={setHelp}>close</button>
           </div>
           <p>
             Each day at 8:00pm EST, a new headline from recent news is selected.
@@ -174,11 +177,16 @@ function App() {
           </p>
         </div>
       )}
-      <img
+      {image3 != "" && <img
         className="center"
         src={"data:image/jpeg;base64," + clickedImage}
         alt=""
-      />
+      />}
+      {image3 == "" && 
+      <div className="loader-spacing">
+        <FidgetSpinner className="loader-spacing" backgroundColor="white" height={50} width={50}/>
+      </div>
+      }
       <div className="flex-h">
         <button
           id="1"
